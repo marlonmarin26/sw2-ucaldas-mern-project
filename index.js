@@ -1,8 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const cors = require('cors');
+const userRoutes = require('./src/routes/user_routes');
+// bodyParser es un middleware de express
+// que nos permite acceder al cuerpo de las peticiones entrantes
+// en formato JSON, multipartes y lo convierte en un objeto de JavaScript
+const bodyParser = require('body-parser');
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 // Poder acceder a leer archivo .env
 require("dotenv").config();
@@ -27,3 +34,6 @@ const mongo_connect = () => {
 }
 
 mongo_connect();
+
+// Rutas
+app.use('/api/v1/users/', userRoutes);
